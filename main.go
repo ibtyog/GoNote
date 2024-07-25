@@ -10,12 +10,14 @@ import (
 	"strings"
 
 	"github.com/ibtyog/GoNote/note"
+	"github.com/inancgumus/screen"
 )
 
 func main() {
 	fmt.Println("Welcome to GoNote!")
 	for {
-		option := getUserInput("1. Create new note\n2. View notes\n3. Exit")
+		option := getUserInput("1. Create new note\n2. View notes\n3. Exit\nYour choice:")
+		screen.Clear()
 		switch option {
 		case "1":
 			newNote, err := createNote()
@@ -24,8 +26,10 @@ func main() {
 				return
 			}
 			newNote.Save()
+			screen.Clear()
 		case "2":
 			readAllNotes()
+			screen.Clear()
 		case "3":
 			fmt.Println("Thank you for using GoNote!")
 			return
@@ -36,7 +40,7 @@ func main() {
 }
 
 func getUserInput(promptText string) string {
-	fmt.Println(promptText)
+	fmt.Print(promptText)
 	reader := bufio.NewReader(os.Stdin)
 	text, err := reader.ReadString('\n')
 
@@ -97,8 +101,23 @@ func readAllNotes() {
 				fmt.Println("Provided invalid number.")
 				return
 			}
-
+			screen.Clear()
 			viewNote(list[num-1])
+			operation = getUserInput("Choose operation (edit/remove/quit): ")
+			if operation == "edit" {
+				content := getUserInput("Note content: ")
+				noteTitle := strings.ReplaceAll(list[num-1], ".json", "")
+				editNote, err := note.New(noteTitle, content)
+				if err != nil {
+					return
+				}
+				editNote.Save()
+			} else if operation == "remove" {
+				os.Remove("notes/" + list[num-1])
+			} else {
+				return
+			}
+
 			return
 		case "quit":
 			return
