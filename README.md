@@ -14,15 +14,16 @@ Program asks you for Note title and content, then saves it in json format in exa
 Program shows list of all files and allows you to choose action.
 
 #### Editing files
-Add edit/remove soon! 
+
+Program can edit/remove existing files.
 
 
 
 ## Roadmap
 
-- Add editing existing files
+- Add editing existing files ✔️
 
-- Improve value checks 
+- Improve value checks ✔️
 
 
 ## Authors
